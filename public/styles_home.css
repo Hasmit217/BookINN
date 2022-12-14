@@ -1,0 +1,204 @@
+/* #html{
+
+} */
+.login-container {
+    margin-top: 5%;
+    margin-bottom: 5%;
+    /* margin-right: 20%; */
+}
+
+.login-logo {
+    position: relative;
+    margin-left: -41.5%;
+}
+
+.login-logo img {
+    position: absolute;
+    width: 20%;
+    margin-top: 19%;
+    background: #282726;
+    border-radius: 4.5rem;
+    padding: 5%;
+}
+
+.login-form-1 {
+    padding: 9%;
+    /* background:#282726; */
+    background: #599aaa;
+    border-radius: 8px;
+    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+
+}
+
+.login-form-1 h3 {
+    text-align: center;
+    margin-bottom: 12%;
+
+    color: #fff;
+}
+
+.login-form-2 {
+    padding: 9%;
+    background: #d0896f;
+    border-radius: 8px;
+    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+}
+
+.login-form-2 h3 {
+    text-align: center;
+    margin-bottom: 12%;
+    color: #fff;
+}
+
+.btnSubmit {
+    font-weight: 600;
+    width: 50%;
+    color: #282726;
+    background-color: #fff;
+    border: none;
+    border-radius: 1.5rem;
+    padding: 2%;
+}
+
+.btnForgetPwd {
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.btnForgetPwd:hover {
+    text-decoration: none;
+    color: #fff;
+}
+
+.footer-padding {
+    padding-bottom: 60px;
+}
+
+.footer {
+    text-align: justify;
+    padding-top: 3px;
+    bottom: 0;
+    width: 100%;
+    background-color: #686767;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+    position: relative;
+}
+
+.footer p {
+    margin-top: 10px;
+    font-size: 15px;
+    color: #fff;
+}
+/* .navbar .navbar-header .navbar-brand{
+    display: block;
+    text-align: center;
+    float: none;
+    vertical-align: top;
+} */
+
+.navbar {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border: 0;
+    border-radius: 0;
+    margin-bottom: 0;
+    font-size: 12px;
+    letter-spacing: 5px;
+    background-color: #FFC93C;
+}
+
+.bg {
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+}
+
+.bg img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    min-width: 50%;
+    min-height: 50%;
+}
+
+
+
+
+p {
+    text-align: center;
+}
+
+.navbar-nav li {
+    margin-right: 30px;
+    margin-top: 20px;
+    font-size: medium;
+}
+
+.navbar-nav li a:hover {
+    color: #F87474 !important;
+}
+
+.navbar-brand {
+    padding-top: 20px;
+}
+
+/* Complaint.css */
+.create_complaint {
+    color: black;
+    text-align: center;
+    text-decoration-line: underline;
+    letter-spacing: 5px;
+    font-weight: bold;
+}
+
+.sub_headings {
+    color: black;
+    font-weight: bold;
+    font-size: medium;
+    text-align: left;
+    margin-left: 20px
+}
+
+.taking_date {
+    width: 25%;
+    padding: 2px 2px;
+    margin-left: 50px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.submission {
+    width: 25%;
+    background-color: black;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.submission:hover {
+    background-color: grey;
+
+}
+
+.container1{
+    background-color: rgb(247, 246, 246);
+    margin: 30px 150px;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+

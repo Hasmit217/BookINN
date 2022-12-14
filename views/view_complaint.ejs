@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>HRBCMS</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+    integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="styles_home.css">
+  <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase-firestore.js"></script>
+  <style>
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    td,
+    th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+      word-wrap: break-word;
+    }
+
+    tr:nth-child(even) {
+      background-color: #dddddd;
+    }
+
+    .resolvedButton {
+      text-align: center;
+      padding: 5px;
+      margin: 5px;
+      background-color: #f56d6d;
+      border-radius: 10px;
+      border-bottom: #282726;
+    }
+
+    .heading {
+      text-align: center;
+    }
+
+    .table_div {
+      margin: 10px;
+      padding: 10px;
+      background-color: rgb(249, 248, 248);
+    }
+
+    .wrap {
+      width: 20em;
+      word-wrap: break-word;
+    }
+  </style>
+  <%- include('partials/navbar_admin'); -%>
+
+    <div class="heading">
+      <h1>Complain details</h1>
+    </div>
+    <div class="table_div">
+      <table>
+        <thead>
+          <th>Sr.No</th>
+          <th>Name</th>
+          <th>Complain Date</th>
+          <th>Complain Details</th>
+          <th>Contact Number</th>
+          <th>Department</th>
+          <th>Location</th>
+          <th>Prefrable Time</th>
+          <!-- <th>Status(enter Phone number)</th> -->
+          <!-- <th>Resolved</th> -->
+        </thead>
+        <tbody id="tbody1"></tbody>
+      </table>
+    </div>
+    <%- include('partials/footer'); -%>
+
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyAIX555MfkjTU4df5mS2fuf9jipfRQRum0",
+        authDomain: "hrbcms-a344e.firebaseapp.com",
+        databaseURL: "https://hrbcms-a344e-default-rtdb.firebaseio.com",
+        projectId: "hrbcms-a344e",
+        storageBucket: "hrbcms-a344e.appspot.com",
+        messagingSenderId: "510026551718",
+        appId: "1:510026551718:web:bcf91ce54e00b8df7eff67",
+        measurementId: "G-TP326SHK2W"
+      };
+      
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.firestore();
+      db.settings({ timestampsInSnapshots: true });
+      
+      db.collection("complain").get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          doc.id=doc.data().complainDate;
+          console.log(doc.id);
+        })
+      });
+      // db.collection("complain").get().then((querySnapshot) => {
+      //   querySnapshot.forEach((doc) => {
+      //     // doc.id=doc.data().complainDate;
+      //     console.log(`${doc.id} => ${doc.data()}`);
+      //   })
+      // });
+      // const viewComplain = document.querySelector('#');
+      var compNo = 0;
+      // var x="";
+      function getAllComplain() {
+        db.collection('complain').onSnapshot((querySnapshot) => {
+          var complain = [];
+          // var doc_id=doc.id;
+          querySnapshot.forEach(doc => {
+            complain.push(doc.data());
+          });
+          // console.log(querySnapshot);
+          // console.log(complain);
+          compNo = 0;
+          AddAllComplainToTable(complain)
+        });
+      }
+
+      //Entering data
+
+      // var compNo=0;
+      var tbody = document.getElementById('tbody1');
+
+      function AddComplaintoTable(name, compDate, compDet, number, dept, loc, prefTime) {
+        var trow = document.createElement('tr');
+
+        var td0 = document.createElement('td');
+        var td1 = document.createElement('td');
+        var td2 = document.createElement('td');
+        var td3 = document.createElement('div');
+        td3.className = "wrap";
+        var td4 = document.createElement('td');
+        var td5 = document.createElement('td');
+        var td6 = document.createElement('td');
+        var td7 = document.createElement('td');
+
+        td0.innerHTML = ++compNo;
+        td1.innerHTML = name;
+        td2.innerHTML = compDate;
+        td3.innerHTML = compDet;
+        td4.innerHTML = number;
+        td5.innerHTML = dept;
+        td6.innerHTML = loc;
+        td7.innerHTML = prefTime;
+
+        trow.appendChild(td0);
+        trow.appendChild(td1);
+        trow.appendChild(td2);
+        trow.appendChild(td3);
+        trow.appendChild(td4);
+        trow.appendChild(td5);
+        trow.appendChild(td6);
+        trow.appendChild(td7);
+
+        // x=compDate;
+        // console.log(x);
+        // var ControlDivResBtn = document.createElement("div");
+        // ControlDivResBtn.innerHTML = '<type onclick="DeleteComplain()" id="deleteBtn" class="resolvedButton" >Resolved</button>';
+        // trow.appendChild(ControlDivResBtn);
+        tbody.appendChild(trow);
+
+        //Event for deleting complain
+        // db.collection('complain').get().then((snapshot)=>{
+        //   snapshot.docs.forEach(doc=>{
+        //     renderComplain(doc);
+        //   })
+        // })
+      }
+
+      function AddAllComplainToTable(ComplainDocsList) {
+        stdNo = 0;
+        tbody.innerHTML = "";
+        ComplainDocsList.forEach(element => {
+          AddComplaintoTable(element.Name, element.complainDate, element.complainDetails, element.contactNumber, element.department, element.location, element.preferableTime)
+        });
+      }
+
+      function DeleteComplain() {
+        // var confirm = document.createElement('div');
+        // confirm.innerHTML='<input type="text" id="conf" placeholder="confirm date" class="taking_date required>';
+        document.getElementById("deleteBtn").innerHTML='<input type="text" placeholder="confirmation" class="taking_date" required>';
+        var x = document.getElementById("deleteBtn").innerText;
+        var temp=String(x);
+        console.log(temp);
+        db.collection("complain").doc(temp).delete().then(() => {
+          alert("Document successfully deleted!");
+        }).catch((error) => {
+          alert("Error removing document: ", error);
+        });
+      }
+      //Loading Window
+
+      window.onload = getAllComplain;
+
+    </script>
+
+    

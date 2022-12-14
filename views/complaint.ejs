@@ -1,0 +1,144 @@
+<%- include('partials/header'); -%>
+
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link rel="stylesheet" href="styles_home.css">
+        <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase-firestore.js"></script>
+    </head>
+
+    <body>
+        <div class="container1">
+            <form id="add-complain" action="">
+                <legend>
+                    <h2 class="create_complaint">Create Complaint</h2>
+                </legend>
+                <p>
+                    <p class="sub_headings">
+                        Complaint Date:<label id="currDate" type="text" name="comDate" class="taking_date">
+                </p>
+                <p class="sub_headings">
+                    Roll No:<input type="text" id="rollno" name="roll" class="taking_date" placeholder="Enter Roll No"
+                        required>
+                    </p>
+                <p class="sub_headings">
+                    Department:<input type="text" name="dept" placeholder="Enter Department" class="taking_date"
+                        required>
+                </p>
+                <p class="sub_headings">
+                    Complaint Details:<input type="text" name="comDetails" placeholder="Enter Complain details"
+                    class="taking_date" required>
+                </p>
+                <p class="sub_headings">
+                    Name of Complainer:<input type="text" name="name" placeholder="Enter Name" class="taking_date"
+                    required>
+                </p>
+                </p>
+                <p class="sub_headings">
+                    Location: <input type="text" name="location" placeholder="Enter Location" class="taking_date"
+                    required>
+                </p>
+                <p class="sub_headings">
+                    Contact Number: <input type="number" name="phone" placeholder="Enter Contact number"
+                    class="taking_date" required>
+                </p>
+                <p class="sub_headings">
+                    Preferable Time From: <input type="time" name="time" class="taking_date" required>
+                </p>
+                <p class="sub_headings">
+                    <input type="file" id="myFile" name="filename" class="taking_date">
+                    <input type="submit" class="submission">
+                </p>
+            </form>
+        </div>
+        <%- include('partials/footer'); -%>
+        <script>
+            var today = new Date();
+
+            var day = today.getDate();
+            var month = today.getMonth() + 1;
+            var year = today.getFullYear();
+
+            var hour = today.getHours();
+            if (hour < 10) hour = "0" + hour;
+
+            var minute = today.getMinutes();
+            if (minute < 10) minute = "0" + minute;
+
+            var second = today.getSeconds();
+            if (second < 10) second = "0" + second;
+
+            document.getElementById("currDate").innerHTML = day + "-" + month + "-" + year + "       |       " + hour + ":" + minute + ":" + second;
+            var dateDB = day + "-" + month + "-" + year + "       |       " + hour + ":" + minute + ":" + second;
+
+            const firebaseConfig = {
+                apiKey: "AIzaSyAIX555MfkjTU4df5mS2fuf9jipfRQRum0",
+                authDomain: "hrbcms-a344e.firebaseapp.com",
+                databaseURL: "https://hrbcms-a344e-default-rtdb.firebaseio.com",
+                projectId: "hrbcms-a344e",
+                storageBucket: "hrbcms-a344e.appspot.com",
+                messagingSenderId: "510026551718",
+                appId: "1:510026551718:web:bcf91ce54e00b8df7eff67",
+                measurementId: "G-TP326SHK2W"
+
+            };
+
+            // Initialize Firebase
+            firebase.initializeApp(firebaseConfig);
+            const db = firebase.firestore();
+            db.settings({ timestampsInSnapshots: true });
+
+            // function getComplainID(roll) {
+            //     let cnt = 0;
+            //     db.collection("complain").get().then(function (querySnapshot) {
+            //         querySnapshot.forEach(function (doc) {
+            //             // doc.data() is never undefined for query doc snapshots
+            //             if (doc.data().RollNum == roll) cnt++;
+            //             // console.log(cnt);
+            //             x = cnt;
+            //         });
+            //         console.log(cnt);
+            //     });
+            //     // return cnt;
+            // }
+
+            const form = document.querySelector('#add-complain');
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                db.collection('complain').doc(form.phone.value).set({
+                    Name: form.name.value,
+                    RollNum: form.roll.value,
+                    complainDate: dateDB,
+                    contactNumber: form.phone.value,
+                    department: form.dept.value,
+                    preferableTime: form.time.value,
+                    complainDetails: form.comDetails.value,
+                    location: form.location.value,
+                    // complainId: compID
+                    // description: form.desc.value
+                })
+                alert("Complain registered Succesfull")
+                form.name.value = "";
+                form.roll.value = "";
+                // form.comDate.value = "";
+                form.phone.value = "";
+                form.dept.value = "";
+                form.time.value = "";
+                form.comDetails.value = "";
+                form.location.value = "";
+                // form.desc.value = "";
+
+            })
+
+
+        </script>
+
+    </body>
+
+    </html>

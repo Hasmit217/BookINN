@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title>HRBCMS</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="login.css">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@1,700&display=swap" rel="stylesheet">
+    <style> @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@1,700&display=swap'); </style>
+
+    <style>
+        #intro {
+            background: url(https://admissions.lnmiit.ac.in/assets/img/gallery/big/LNMIIT%20VIEW.jpg) no-repeat center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+
+        .mb-3 {
+            text-align: center;
+            font-family: 'Times New Roman', Times, serif;
+            color: rgb(255, 255, 255);
+        }
+
+        .col-md-12 {
+            object-position: center;
+        }
+
+        .mask {
+            background-color: rgba(114, 110, 110, 0.616);
+        }
+    </style>
+    <!-- <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script> -->
+
+</head>
+
+<body>
+
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <!-- <p class="navbar-brand">Hostel Booking and Complaint Registration Portal</p> -->
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdMP51bD_vnLKY33WELHtr9_RZ0mY5bPW5xAogLw0W&s"
+                    width="180px" height="60px">
+            </div>
+        </div>
+    </nav>
+
+    <!-- <div class="row">
+        <div class="col-md-12">
+            <a id="signWithGoogle" class="btn btn-lg btn-google btn-block text-uppercase btn-outline" href="#"><img
+                    src="https://img.icons8.com/color/16/000000/google-logo.png"> Signup Using Google</a>
+        </div>
+    </div>
+    <br> -->
+    <div id="intro" class="bg-image shadow-2-strong">
+        <div class="mask">
+          <div class="container d-flex align-items-center justify-content-center text-center h-100">
+            <div class="text-white">
+              <h1 class="mb-3" style="font-family: 'Josefin Sans', sans-serif;font-size:80px; color:rgb(39, 4, 4)">BookINN</h1>
+                <div class="col-md-12">
+                    <a id="signWithGoogle" class="btn btn-lg btn-google btn-block text-uppercase btn-outline" href="#"><img
+                    src="https://img.icons8.com/color/16/000000/google-logo.png"> Sign In Using Google</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <p class="text-inverse text-center">Already have an account? <a href="<?= base_url() ?>auth/login"
+            data-abc="true">Login</a></p> -->
+
+    <div class="footer-padding"></div>
+    <div class="footer">
+        <p> © The LNM Institute of Information Technology (Group 12) | 2022</p>
+    </div>
+    <!-- ********************************************************************************************************* -->
+    <!-- <script src="/__/firebase/6.2.4/firebase-app.js"></script>
+    <script src="/__/firebase/6.2.4/firebase-auth.js"></script> -->
+
+    <!-- <script src="/__/firebase/init.js"></script> -->
+    <!-- <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase-auth.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+        integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script type="module">
+
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js";
+        import { GoogleAuthProvider, getAuth, signInWithPopup, signInWithRedirect, getRedirectResult } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAIX555MfkjTU4df5mS2fuf9jipfRQRum0",
+            authDomain: "hrbcms-a344e.firebaseapp.com",
+            databaseURL: "https://hrbcms-a344e-default-rtdb.firebaseio.com",
+            projectId: "hrbcms-a344e",
+            storageBucket: "hrbcms-a344e.appspot.com",
+            messagingSenderId: "510026551718",
+            appId: "1:510026551718:web:bcf91ce54e00b8df7eff67",
+            measurementId: "G-TP326SHK2W"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const provider = new GoogleAuthProvider(app);
+        const auth = getAuth(app);
+        // const analytics = getAnalytics(app);
+
+        const signInWithGoogleBtn = document.getElementById('signWithGoogle');
+
+        const signInWithGoogle = () => {
+
+            signInWithPopup(auth, provider)
+
+                .then((result) => {
+                    // This gives you a Google Access Token. You can use it to access the Google API.
+                    const credential = GoogleAuthProvider.credentialFromResult(result);
+                    const token = credential.accessToken;
+                    // The signed-in user info.
+                    const user = result.user;
+                    const emailtext = user.email;
+                    console.log(user);
+                    const verifyDomain = emailtext.match("@lnmiit.ac.in")
+                    if (verifyDomain == null) {
+                        if (emailtext == "hasmitchauhan99@gmail.com") {
+                            location.replace("home_admin");
+                            alert("Admin Login Succesfull");
+                        }
+                        else {
+                            alert("Unauthorized User");
+                        }
+
+                    }
+                    else {
+                        const users = emailtext.match(/[0-9]{2}[A-Z]{3}[0-9]{3}/i)
+                        if (users != null) {
+                            // location.render('home',{img:user.imgURL})
+                            alert("User login Succesfull");
+                            $.post("/temp", { emailId: emailtext }, function (res) {
+                                if (res == 'done') {
+                                    location.replace("/home");
+                                }
+                            });
+
+                        }
+                        else {
+                            location.replace('registration');
+                            alert("Admin Login Succesfull");
+                        }
+                        // alert(user.email);
+                    }
+                    // alert(user.photoURL);
+
+                    // ...
+                }).catch((error) => {
+                    // Handle Errors here.
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    // The email of the user's account used.
+                    const email = error.customData.email;
+                    // The AuthCredential type that was used.
+                    const credential = GoogleAuthProvider.credentialFromError(error);
+                    // ...
+                    alert(errorMessage);
+                });
+        }
+
+        signInWithGoogleBtn.addEventListener('click', signInWithGoogle);
+
+    </script>
+
+    <!-- <script src="index.js"></script> -->
+
+</body>

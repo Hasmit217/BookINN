@@ -1,0 +1,142 @@
+<%- include('partials/header'); -%>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- <script src="book.js"></script> -->
+    <link rel="stylesheet" href="style_book.css">
+    <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase-firestore.js"></script>
+</head>
+<body>
+    <div class="book-container">
+        <h1>Hostel Details</h1><br><br>
+        <div class="hostel-detail">
+            <h2>Boys Hostel details</h2>
+            <div style="border:rgba(0, 0, 0, 0.582); 
+            width: 800px; border-width:2px; border-style:solid; padding: 20px" class="hostel-container">
+                <label for="room-info">Double Occupancy Rooms Available:</label><br><br>
+                <label for="room-info">Single Occupancy Rooms Available:</label><br><br>
+            </div>
+        </div>
+        <br><br>
+        <div class="hostel-detail">
+            <h2>Girls Hostel details</h2>
+            <div style="border:rgba(0, 0, 0, 0.582); 
+            width: 800px; border-width:2px; border-style:solid; padding: 20px" class="hostel-container">
+                <label for="room-info">Double Occupancy Rooms Available:</label><br><br>
+                <label for="room-info">Single Occupancy Rooms Available:</label><br><br>
+            </div>
+        </div> 
+
+        <h1>Booking Details</h1>
+        <div class="detail-container">
+            <form id="book-detail" action="">
+                <fieldset>
+                    <div class="detail">
+                        <input type="radio" id="ss" name="option" value="single" />
+                        <label for="single">Single Occupancy</label>
+                        <input type="radio" id="ds" name="option" value="double" />
+                        <label for="double">Double Occupancy</label>
+                        <br/>
+            
+                        
+                        <div class="single box">
+                            <!-- <li>single seater options (remove this li at final stage)</li> -->
+                            <button type="submit">Book Now</button>
+                            <br><br>
+                        </div>
+
+
+                        <div class="double box" >
+                            <!-- <li>double seater options (remove this li at final stage)</li> -->
+                            <input type="radio" id="hr" name="dOption" value="have" />
+                            <label for="have">Have Roommate</label>
+                            <input type="radio" id="dnhr" name="dOption" value="donothave" />
+                            <label for="donothave">Do not have Roommate</label>
+
+                        </div>
+                        
+                        <div class="have box1">
+                            <h5>[Here you have to enter the roommate details. Application ID of roommate will be entered the Application ID field which he/she got after fee payment (be causious while entering details it is irreversible), if once accepted then no changes can be made.]</h5>
+                            <p>
+                                Roommate Name*: <input type="text" required>
+                            </p>
+                            <p>
+                                Roommate Roll No.*: <input type="text" required>
+                            </p>
+                            <p>
+                                Unique Application ID of Roommate*: <input type="text" required>
+                            </p>
+                            <button type="submit">Submit and Book Now</button>
+
+                        </div>
+
+                        <div class="donothave box1">
+                            <button type="submit">Book Now</button>
+                            <br><br>
+                        </div>
+                    </div>
+            </form>
+            <script>
+                $(document).ready(function(){
+                        
+                        $(".single").hide();
+                        $(".double").hide();
+                        $('input[name="option"]').click(function(){ 
+                            $(".box1").hide();
+                            var inputValue = $(this).attr("value");
+                            var targetBox = $("." + inputValue);
+                            $(".box").not(targetBox).hide();
+                            $(targetBox).show();
+                            $( ".box input" ).prop( "checked", false );
+                        });
+                    });
+                    $(document).ready(function(){
+                        $(".have").hide();
+                        $(".donothave").hide();
+                        $('input[name="dOption"]').click(function(){
+                            var inputValue = $(this).attr("value");
+                            var targetBox = $("." + inputValue);
+                            $(".box1").not(targetBox).hide();
+                            $(targetBox).show();
+                            $( ".box1 input" ).prop( "checked", false );
+                        });
+                    });
+                const firebaseConfig = {
+                apiKey: "AIzaSyAIX555MfkjTU4df5mS2fuf9jipfRQRum0",
+                authDomain: "hrbcms-a344e.firebaseapp.com",
+                databaseURL: "https://hrbcms-a344e-default-rtdb.firebaseio.com",
+                projectId: "hrbcms-a344e",
+                storageBucket: "hrbcms-a344e.appspot.com",
+                messagingSenderId: "510026551718",
+                appId: "1:510026551718:web:bcf91ce54e00b8df7eff67",
+                measurementId: "G-TP326SHK2W"
+            };
+
+            // Initialize Firebase
+            firebase.initializeApp(firebaseConfig);
+            const db = firebase.firestore();
+            db.settings({ timestampsInSnapshots: true });
+
+            const form = document.querySelector('#add-complain');
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                db.collection('complain').add({
+                    
+                })
+                alert("Student Booking Registered.")
+                
+            })
+            </script>
+        </div>
+    </div>
+</body>
+</html>
+<%- include('partials/footer'); -%>

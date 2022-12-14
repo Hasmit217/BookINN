@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>HRBCMS</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+    integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="styles_home.css">
+  <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase-firestore.js"></script>
+  <style>
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    td,
+    th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+      word-wrap: break-word;
+    }
+
+    tr:nth-child(even) {
+      background-color: #dddddd;
+    }
+
+    .resolvedButton {
+      text-align: center;
+      padding: 5px;
+      margin: 5px;
+      background-color: #f56d6d;
+      border-radius: 10px;
+      border-bottom: #282726;
+    }
+    .heading{
+      text-align: center;
+    }
+    .table_div{
+      margin: 10px;
+      padding: 10px;
+      background-color: rgb(249, 248, 248);
+    }
+    .wrap {
+      width: 20em;
+      word-wrap: break-word;
+    }
+    /* ************************ */
+    
+  </style>
+  <%- include('partials/navbar_admin'); -%>
+
+    <div class="heading"><h1>Student Details</h1></div>
+    <div class="table_div">
+      <table>
+        <thead>
+          <th>Sr.No</th>
+          <th>Name</th>
+          <th>Father Name</th>
+          <th>Roll No</th>
+          <th>Date of Birth</th>
+          <th>Student Contact No</th>
+          <th>Parents Contact No</th>
+          <th>Address</th>
+        </thead>
+        <tbody id="tbody2"></tbody>
+      </table>
+    </div>
+
+    <%- include('partials/footer'); -%>
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyAIX555MfkjTU4df5mS2fuf9jipfRQRum0",
+        authDomain: "hrbcms-a344e.firebaseapp.com",
+        databaseURL: "https://hrbcms-a344e-default-rtdb.firebaseio.com",
+        projectId: "hrbcms-a344e",
+        storageBucket: "hrbcms-a344e.appspot.com",
+        messagingSenderId: "510026551718",
+        appId: "1:510026551718:web:bcf91ce54e00b8df7eff67",
+        measurementId: "G-TP326SHK2W"
+      };
+
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.firestore();
+      db.settings({ timestampsInSnapshots: true });
+
+      // const viewComplain = document.querySelector('#');
+      var userNo = 0;
+      function getAllUser() {
+        db.collection('user').onSnapshot((querySnapshot) => {
+          var userData = [];
+          // var doc_id=doc.id;
+          querySnapshot.forEach(doc => {
+            userData.push(doc.data());
+          });
+          // console.log(querySnapshot);
+          // console.log(complain);
+          userNo = 0;
+          AddAllUserToTable(userData)
+        });
+      }
+
+      //Entering data
+
+      // var compNo=0;
+      var tbody = document.getElementById('tbody2');
+
+      function AddUsertoTable(name, fathName, roll, dob, stuCont, parCont, Addr) {
+        var trow = document.createElement('tr');
+
+        var td0 = document.createElement('td');
+        var td1 = document.createElement('td');
+        var td2 = document.createElement('td');
+        var td3 = document.createElement('td');
+        var td4 = document.createElement('td');
+        var td5 = document.createElement('td');
+        var td6 = document.createElement('td');
+        var td7 = document.createElement('div');
+        td7.className = "wrap";
+
+        td0.innerHTML = ++userNo;
+        td1.innerHTML = name;
+        td2.innerHTML = fathName;
+        td3.innerHTML = roll;
+        td4.innerHTML = dob;
+        td5.innerHTML = stuCont;
+        td6.innerHTML = parCont;
+        td7.innerHTML = Addr;
+
+        trow.appendChild(td0);
+        trow.appendChild(td1);
+        trow.appendChild(td2);
+        trow.appendChild(td3);
+        trow.appendChild(td4);
+        trow.appendChild(td5);
+        trow.appendChild(td6);
+        trow.appendChild(td7);
+
+        tbody.appendChild(trow);
+      }
+
+      function AddAllUserToTable(UserDocsList) {
+        stdNo = 0;
+        tbody.innerHTML = "";
+        UserDocsList.forEach(element => {
+          AddUsertoTable(element.Name, element.fatherName, element.rollNumber, element.dateOfBirth, element.phoneStud, element.phoneGuard, element.address)
+        });
+      }
+
+      //Loading Window
+      window.onload = getAllUser;
+    </script>

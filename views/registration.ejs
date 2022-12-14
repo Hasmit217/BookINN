@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title>HRBCMS</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+        integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles_home.css">
+    <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase-firestore.js"></script>
+    <%- include('partials/navbar_admin'); -%>
+        <div class="container1">
+            <form id="add-stud" action="">
+                <legend>
+                    <h2 class="create_complaint">Register Students</h2>
+                </legend>
+                <p>
+                <p class="sub_headings">
+                    Name of the student:<input type="text" name="name" placeholder="#" class="taking_date" required>
+                </p>
+                <p class="sub_headings">
+                    Roll Number:<input type="text" name="roll" placeholder="#" class="taking_date" required>
+                </p>
+                <p class="sub_headings">
+                    Father's Name:<input type="text" name="f_name" placeholder="#" class="taking_date" required>
+                </p>
+                <p class="sub_headings">
+                    Date of Birth:<input type="date" name="dob" placeholder="#" class="taking_date" required>
+                </p>
+                <p class="sub_headings">
+                    Gender:
+                      <input type="radio" id="html" name="gen" value="Male">
+                      <label for="Male">Male</label>
+                      <input type="radio" id="css" name="gen" value="Female">
+                      <label for="Female">Female</label><br>
+                </p>
+                <p class="sub_headings">
+                    Department:<input type="text" name="branch" placeholder="#" class="taking_date" required>
+                </p>
+                <p class="sub_headings">
+                    Year of Graduation:<input type="text" name="yog" placeholder="#" class="taking_date" required>
+                </p>
+                <p class="sub_headings">
+                    Phone Number of Student:<input type="number" name="phone" placeholder="#" class="taking_date" required>
+                </p>
+                <p class="sub_headings">
+                    Phone Number of guardian:<input type="number" name="phoneg" placeholder="#" class="taking_date" required>
+                </p>
+                </p>
+            </p>
+                <p>
+                    <p>
+                        <p class="sub_headings">
+                            Present Address: <input type="text" name="add" placeholder="#" class="taking_date" required>
+                        </p>
+                        
+                    </p>
+                </p>
+                
+                <p class="sub_headings">
+                    <input type="submit" class="submission">
+                </p>
+
+                
+            </form>
+        </div>
+        <%- include('partials/footer'); -%>
+        <script>
+            const firebaseConfig = {
+                apiKey: "AIzaSyAIX555MfkjTU4df5mS2fuf9jipfRQRum0",
+                authDomain: "hrbcms-a344e.firebaseapp.com",
+                databaseURL: "https://hrbcms-a344e-default-rtdb.firebaseio.com",
+                projectId: "hrbcms-a344e",
+                storageBucket: "hrbcms-a344e.appspot.com",
+                messagingSenderId: "510026551718",
+                appId: "1:510026551718:web:bcf91ce54e00b8df7eff67",
+                measurementId: "G-TP326SHK2W"
+            };
+
+            // Initialize Firebase
+            firebase.initializeApp(firebaseConfig);
+            const db = firebase.firestore();
+            db.settings({ timestampsInSnapshots: true });
+
+            const form = document.querySelector('#add-stud');
+            // const user_id=form.roll.value;
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                db.collection('user').add({
+                    Name: form.name.value,
+                    rollNumber: form.roll.value,
+                    fatherName: form.f_name.value,
+                    dateOfBirth: form.dob.value,
+                    gender: form.gen.value,
+                    Department: form.branch.value,
+                    yearOfGraduation: form.yog.value,
+                    phoneStud: form.phone.value,
+                    phoneGuard: form.phoneg.value,
+                    address: form.add.value
+                })
+                alert("Student resgistered Successfully")
+                form.name.value = "";
+                form.roll.value = "";
+                form.f_name.value = "";
+                form.dob.value = "";
+                form.gen.value = "";
+                form.branch.value = "";
+                form.yog.value = "";
+                form.phone.value = "";
+                form.phoneg.value = "";
+                form.add.value = "";
+            })
+        </script>
+        </body>
+
+</html>
